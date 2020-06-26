@@ -1,20 +1,38 @@
-<<<<<<< HEAD
-# loading_overlay_pro
-=======
 # loading_overlay_pro
 
-A new Flutter project.
+A simple widget wrapper  set of loading animations for Flutter projects.
+Use animation from https://github.com/cytryn/loading-animations
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Then import the file to your project:
+```dart
+import 'package:loading_overlay_pro/loading_overlay_pro.dart'
+```
 
-A few resources to get you started if this is your first Flutter project:
+Then add the following code:
+```dart
+ LoadingOverlayPro({
+    Key key,
+    @required this.isLoading,
+    @required this.child,
+    this.colorBackground = Colors.black54,
+    this.progressIndicator = const LoadingBouncingLine.circle(),
+  });
+```
+Or customize it even more!
+```dart
+LoadingBouncingLine.circle(
+  borderColor: Colors.cyan,
+  borderSize: 3.0,
+  size: 120.0,
+  backgroundColor: Colors.cyanAccent,
+  duration: Duration(milliseconds: 500),
+);
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+For more customization, please look inside the loading animation files.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> 5c05f21... Init commit
+Note: all the animations come ready to go just by calling `LoadingBouncingLine.square()`, for example.
+
+Many basic animations contain `.circle()` and `.square()` variations by default.

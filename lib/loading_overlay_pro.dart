@@ -1,5 +1,15 @@
+export 'animations/bouncing_grid.dart';
+export 'animations/bouncing_line.dart';
+export 'animations/bumping_line.dart';
+export 'animations/double_flipping_shape.dart';
+export 'animations/fading_line.dart';
+export 'animations/filling_shape.dart';
+export 'animations/flipping_shape.dart';
+export 'animations/jumping_line.dart';
+export 'animations/rotating_shape.dart';
+
 import 'package:flutter/material.dart';
-import 'package:loading_overlay_pro/src/src.dart';
+import 'package:loading_overlay_pro/animations/bouncing_line.dart';
 
 class LoadingOverlayPro extends StatefulWidget {
   final bool isLoading;

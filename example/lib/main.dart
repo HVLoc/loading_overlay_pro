@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loading_overlay_pro/loading_overlay_pro.dart';
-import 'package:loading_overlay_pro/src/src.dart';
 
 void main() => runApp(MyApp());
 
