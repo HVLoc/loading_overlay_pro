@@ -1,4 +1,4 @@
-## [1.0.0] - First release.
+## [1.0.0+1] - First release.
 
 First version released with 4 animations:
 
