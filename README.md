@@ -1,6 +1,7 @@
 # loading_overlay_pro
 
 A simple widget wrapper  set of loading animations for Flutter projects.
+
 Use animation from https://github.com/cytryn/loading-animations
 
 ## Getting Started
