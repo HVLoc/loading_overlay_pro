@@ -1,3 +1,10 @@
+## [2.0.0] - Updating package details.
+
+### Fix: 
+Fixing on pubspec.yaml
+Added full path to example images
+
+
 ## [1.0.0+1] - First release.
 
 First version released with 4 animations:
