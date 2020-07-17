@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 
@@ -24,12 +25,14 @@ class DemoPage extends StatefulWidget {
 class _DemoPageState extends State<DemoPage> {
   bool _isLoading = false;
 
+  bool _isIOS = false;
+
   void _submit() {
     setState(() {
       _isLoading = true;
     });
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 3), () {
       setState(() {
         _isLoading = false;
       });
@@ -44,18 +47,79 @@ class _DemoPageState extends State<DemoPage> {
         ),
         body: LoadingOverlayPro(
           child: Center(
-            child: RaisedButton(
-              onPressed: _submit,
-              child: Text('Show Loading'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                RaisedButton(
+                  onPressed: () {
+                    _isIOS = false;
+                    _submit();
+                  },
+                  child: Text('Show Loading BouncingLine'),
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    _isIOS = true;
+                    _submit();
+                  },
+                  child: Text('Show Loading Custom IOS'),
+                ),
+              ],
             ),
           ),
+          backgroundColor: _isIOS ? Colors.white : Colors.black54,
           isLoading: _isLoading,
-          progressIndicator: LoadingBouncingLine.circle(
-            backgroundColor: Colors.blue,
-            size: 150.0,
-            duration: Duration(seconds: 2),
-            borderColor: Colors.blue,
-          ),
+          progressIndicator: _isIOS
+              ? CupertinoActivityIndicator(radius: 100)
+              : LoadingBouncingLine.circle(
+                  backgroundColor: Colors.blue,
+                  size: 150.0,
+                  duration: Duration(seconds: 2),
+                  borderColor: Colors.blue,
+                ),
+          headerLoading: _isIOS
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlutterLogo(),
+                    SizedBox(width: 10),
+                    Text(
+                      "Loading Overlay Pro",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
+                )
+              : null,
+          bottomLoading: _isIOS
+              ? Text("Loading...", style: TextStyle(fontSize: 20.0))
+              : null,
         ),
       );
+
+  Widget test() {
+    return LoadingOverlayPro(
+      child: Center(
+        child: RaisedButton(
+          onPressed: () {
+            _submit();
+          },
+          child: Text('Show Loading Custom IOS'),
+        ),
+      ),
+      backgroundColor: _isIOS ? Colors.white : Colors.black54,
+      isLoading: _isLoading,
+      progressIndicator: _isIOS
+          ? CupertinoActivityIndicator(radius: 100)
+          : LoadingBouncingLine.circle(
+              backgroundColor: Colors.blue,
+              size: 150.0,
+              duration: Duration(seconds: 2),
+              borderColor: Colors.blue,
+            ),
+      headerLoading: Text("App Name"),
+      bottomLoading: Text("Loading..."),
+    );
+  }
 }

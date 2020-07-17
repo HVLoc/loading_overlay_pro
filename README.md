@@ -2,7 +2,7 @@
 
 A simple widget wrapper  set of loading animations for Flutter projects.
 
-Use animation from https://github.com/cytryn/loading-animations
+Use animation from [loading_animations](https://github.com/cytryn/loading-animations) 
 
 ## Getting Started
 
@@ -30,6 +30,12 @@ LoadingBouncingLine.circle(
   backgroundColor: Colors.cyanAccent,
   duration: Duration(milliseconds: 500),
 );
+```
+
+or add header and bottom
+```dart
+      headerLoading: Text("App Name"),
+      bottomLoading: Text("Loading..."),
 ```
 
 For more customization, please look inside the loading animation files.
