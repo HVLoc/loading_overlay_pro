@@ -1,3 +1,6 @@
+
+## [2.1.0] - Add percent Loading when you download
+
 ## [2.0.1] - Add header and bottom widget
 
 ## [2.0.0] - Updating package details.

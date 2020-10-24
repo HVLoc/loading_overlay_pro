@@ -33,7 +33,6 @@ class _LoadingOverlayPageState extends State<LoadingOverlayPage> {
           backgroundColor: Colors.blue,
         ),
         body: LoadingOverlayPro(
-          
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

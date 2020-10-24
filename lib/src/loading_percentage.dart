@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -12,13 +11,15 @@ class LoadingPercentage extends StatefulWidget {
     this.overLoading,
     this.timer = const Duration(seconds: 100),
     this.colorLoading = Colors.blue,
+    this.colorBackgroudLoading = Colors.white,
     this.paintingStyle = PaintingStyle.stroke,
     this.strokeJoin = StrokeJoin.round,
     this.strokeCap = StrokeCap.round,
     this.strokeWidth = 15.0,
-    this.textColor,
+    this.textColor = Colors.white,
     this.showProgress = true,
     this.bottomLoading,
+    this.isLineLoading = true,
   }) : super(key: key);
 
   /// Show/hide loading
@@ -33,6 +34,8 @@ class LoadingPercentage extends StatefulWidget {
 
   final Widget bottomLoading;
 
+  final bool isLineLoading;
+
   /// Defaults to [Duration(seconds: 100)].
   final Duration timer;
 
@@ -40,6 +43,11 @@ class LoadingPercentage extends StatefulWidget {
   ///
   /// Defaults to [Colors.blue].
   final Color colorLoading;
+
+  /// The color to use when stroking or filling a shape with LineLoading
+  ///
+  /// Defaults to [Colors.white].
+  final Color colorBackgroudLoading;
 
   /// Strategies for painting shapes and paths on a canvas.
   ///
@@ -111,51 +119,107 @@ class _LoadingPercentageState extends State<LoadingPercentage>
                 color: widget.backgroundColor,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (widget.overLoading != null) widget.overLoading,
-                    SizedBox(height: 20),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      child: AnimatedBuilder(
-                        animation: _controller,
-                        builder: (BuildContext context, Widget child) {
-                          return CustomPaint(
-                            size: Size(MediaQuery.of(context).size.width, 50),
-                            painter: PolygonPainter(
-                                progress: _controller.value,
-                                color: Colors.blue,
-                                paintingStyle: widget.paintingStyle,
-                                strokeCap: widget.strokeCap,
-                                strokeJoin: widget.strokeJoin,
-                                strokeWidth: widget.strokeWidth),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    if (widget.showProgress)
-                      AnimatedBuilder(
-                          animation: _controller,
-                          builder: (BuildContext context, Widget child) {
-                            return Text(
-                              (_controller.value * 100).toInt().toString() +
-                                  ' %',
-                              style: TextStyle(color: widget.textColor),
-                            );
-                          }),
-                    SizedBox(height: 20),
-                    if (widget.bottomLoading != null) widget.bottomLoading
-                  ],
-                ))),
+                  children: widget.isLineLoading
+                      ? buildLinePainter()
+                      : buildCirclePainter(),
+                )))
       ],
+    );
+  }
+
+  List<Widget> buildLinePainter() {
+    return [
+      if (widget.overLoading != null) widget.overLoading,
+      SizedBox(height: 20),
+      Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: widget.colorBackgroudLoading,
+            borderRadius: BorderRadius.all(Radius.circular(80))),
+        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        margin: const EdgeInsets.all(8.0),
+        height: 25,
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (BuildContext context, Widget child) {
+            return CustomPaint(
+              size: Size(MediaQuery.of(context).size.width, 50),
+              painter: LinePainter(
+                  progress: _controller.value,
+                  color: Colors.blue,
+                  paintingStyle: widget.paintingStyle,
+                  strokeCap: widget.strokeCap,
+                  strokeJoin: widget.strokeJoin,
+                  strokeWidth: widget.strokeWidth),
+            );
+          },
+        ),
+      ),
+      SizedBox(height: 20),
+      if (widget.showProgress)
+        AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget child) {
+              return _buildprogress();
+            }),
+      SizedBox(height: 20),
+      if (widget.bottomLoading != null) widget.bottomLoading
+    ];
+  }
+
+  List<Widget> buildCirclePainter() {
+    return [
+      if (widget.overLoading != null) widget.overLoading,
+      SizedBox(height: 20),
+      Container(
+        alignment: Alignment.center,
+        child: Center(
+          child: Stack(
+            children: [
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (BuildContext context, Widget child) {
+                  return CustomPaint(
+                    size: Size(MediaQuery.of(context).size.width, 50),
+                    painter: CirclesPainter(
+                        progress: _controller.value,
+                        color: widget.colorLoading,
+                        paintingStyle: widget.paintingStyle,
+                        strokeCap: widget.strokeCap,
+                        strokeJoin: widget.strokeJoin,
+                        strokeWidth: widget.strokeWidth),
+                  );
+                },
+              ),
+              if (widget.showProgress)
+                Center(
+                  child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (BuildContext context, Widget child) {
+                        return _buildprogress();
+                      }),
+                ),
+            ],
+          ),
+        ),
+      ),
+      SizedBox(height: 20),
+      if (widget.bottomLoading != null) widget.bottomLoading
+    ];
+  }
+
+  Widget _buildprogress() {
+    return Text(
+      _controller.value < 1
+          ? (_controller.value * 100).toInt().toString() + ' %'
+          : '99 %',
+      style: TextStyle(color: widget.textColor, fontSize: 30),
     );
   }
 }
 
-class PolygonPainter extends CustomPainter {
-  PolygonPainter({
+class LinePainter extends CustomPainter {
+  LinePainter({
     @required this.color,
     @required this.progress,
     @required this.paintingStyle,
@@ -194,17 +258,45 @@ class PolygonPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
+}
 
-  Path createPath(int sides, double radius) {
-    var path = Path();
-    var angle = (math.pi * 2) / sides;
-    path.moveTo(radius * math.cos(0.0), radius * math.sin(0.0));
-    for (int i = 1; i <= sides; i++) {
-      double x = radius * math.cos(angle * i);
-      double y = radius * math.sin(angle * i);
-      path.lineTo(x, y);
-    }
-    path.close();
-    return path;
+class CirclesPainter extends CustomPainter {
+  CirclesPainter({
+    @required this.color,
+    @required this.progress,
+    @required this.paintingStyle,
+    @required this.strokeJoin,
+    @required this.strokeCap,
+    @required this.strokeWidth,
+  });
+  final double progress;
+  final Color color;
+  final PaintingStyle paintingStyle;
+  final StrokeJoin strokeJoin;
+  final StrokeCap strokeCap;
+  final double strokeWidth;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint _paint = Paint()
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..style = paintingStyle
+      ..strokeJoin = strokeJoin
+      ..strokeCap = strokeCap;
+    var path = Path()
+      ..addOval(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2), radius: 80));
+
+    PathMetric pathMetric = path.computeMetrics().first;
+    Path extractPath =
+        pathMetric.extractPath(0.0, pathMetric.length * progress);
+
+    canvas.drawPath(extractPath, _paint);
+  }
+
+  @override
+  bool shouldRepaint(CirclesPainter oldDelegate) {
+    return true;
   }
 }

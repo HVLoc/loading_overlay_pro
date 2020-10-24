@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:example/percentage_example.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 
 import 'loading_example.dart';
 

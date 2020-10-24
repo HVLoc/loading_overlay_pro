@@ -46,6 +46,8 @@ Many basic animations contain `.circle()` and `.square()` variations by default.
 
 ## Example 
 
-To run file example, please use flutter 1.19.x
+To run file example, please use flutter 1.19.x or 1.20.x
 
 ![](https://github.com/HVLoc/loading_overlay_pro/blob/master/assets/loading_overlay_pro.gif)
+![](https://github.com/HVLoc/loading_overlay_pro/blob/master/assets/percentLoadingLine.gif)
+![](https://github.com/HVLoc/loading_overlay_pro/blob/master/assets/percentLoadingCircle.gif)
