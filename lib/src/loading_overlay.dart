@@ -8,19 +8,21 @@ class LoadingOverlayPro extends StatefulWidget {
     @required this.child,
     this.backgroundColor = Colors.black54,
     this.progressIndicator = const LoadingBouncingLine.circle(),
-    this.headerLoading,
+    this.overLoading,
     this.bottomLoading,
   }) : super(key: key);
 
+  /// Show/hide loading
   final bool isLoading;
 
+  /// Defaults to [Colors.black54].
   final Color backgroundColor;
 
   final Widget progressIndicator;
 
   final Widget child;
 
-  final Widget headerLoading;
+  final Widget overLoading;
 
   final Widget bottomLoading;
 
@@ -41,7 +43,7 @@ class _LoadingOverlayProState extends State<LoadingOverlayPro> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (widget.headerLoading != null) widget.headerLoading,
+                    if (widget.overLoading != null) widget.overLoading,
                     SizedBox(height: 20),
                     Center(child: widget.progressIndicator),
                     SizedBox(height: 20),

@@ -10,3 +10,4 @@ export 'animations/flipping_shape.dart';
 export 'animations/jumping_line.dart';
 export 'animations/rotating_shape.dart';
 export 'src/loading_overlay.dart';
+export 'src/loading_percentage.dart';

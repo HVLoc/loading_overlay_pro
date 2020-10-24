@@ -46,4 +46,6 @@ Many basic animations contain `.circle()` and `.square()` variations by default.
 
 ## Example 
 
+To run file example, please use flutter 1.19.x
+
 ![](https://github.com/HVLoc/loading_overlay_pro/blob/master/assets/loading_overlay_pro.gif)
