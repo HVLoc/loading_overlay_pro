@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LoadingBumpingLine extends ProgressIndicator {
   /// Sets an [AnimationController] is case you need to do something
   /// specific with it like play/pause animation.
-  final AnimationController controller;
+  final AnimationController? controller;
 
   final BoxShape _shape;
 
@@ -26,7 +26,7 @@ class LoadingBumpingLine extends ProgressIndicator {
   /// Size of the border of each shape in the line.
   ///
   /// Default size is set to [size/32].
-  final double borderSize;
+  final double? borderSize;
 
   /// Total duration for one cycle of animation.
   ///
@@ -35,11 +35,11 @@ class LoadingBumpingLine extends ProgressIndicator {
 
   /// Sets an [IndexedWidgetBuilder] function to return
   /// your own customized widget.
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// Creates the LoadingBumpingLine animation with a circle shape
   const LoadingBumpingLine.circle({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blueGrey,
     this.borderColor = Colors.transparent,
@@ -62,7 +62,7 @@ class LoadingBumpingLine extends ProgressIndicator {
 
   /// Creates the LoadingBumpingLine animation with a square shape
   const LoadingBumpingLine.square({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blueGrey,
     this.borderColor = Colors.transparent,
@@ -89,8 +89,8 @@ class LoadingBumpingLine extends ProgressIndicator {
 
 class _LoadingBumpingLineState extends State<LoadingBumpingLine>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation1, _animation2;
+  AnimationController? _controller;
+  Animation<double>? _animation1, _animation2;
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _LoadingBumpingLineState extends State<LoadingBumpingLine>
 
     _animation1 = Tween(begin: -1.0, end: 0.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.0, 0.5, curve: Curves.easeInCubic),
         reverseCurve: const Interval(0.0, 0.5, curve: Curves.easeInCubic),
       ),
@@ -108,24 +108,24 @@ class _LoadingBumpingLineState extends State<LoadingBumpingLine>
 
     _animation2 = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.5, 1.0, curve: Curves.easeOutCubic),
         reverseCurve: const Interval(0.5, 1.0, curve: Curves.easeOutCubic),
       ),
     );
 
-    _controller
+    _controller!
       ..addListener(() => setState(() {}))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          _controller.reverse();
+          _controller!.reverse();
         }
         if (status == AnimationStatus.dismissed) {
-          _controller.forward();
+          _controller!.forward();
         }
       });
 
-    _controller.forward();
+    _controller!.forward();
     // _controller.repeat();
   }
 
@@ -147,7 +147,7 @@ class _LoadingBumpingLineState extends State<LoadingBumpingLine>
     );
   }
 
-  Widget _buildShape(Animation<double> animation, int index) {
+  Widget _buildShape(Animation<double>? animation, int index) {
     // final int direction = index == 0 ? -1 : 1;
     // print('direction: $direction');
     return animation != null
@@ -162,7 +162,7 @@ class _LoadingBumpingLineState extends State<LoadingBumpingLine>
     return SizedBox.fromSize(
       size: Size.square(widget.size / 4),
       child: widget.itemBuilder != null
-          ? widget.itemBuilder(context, index)
+          ? widget.itemBuilder!(context, index)
           : DecoratedBox(
               decoration: BoxDecoration(
                 shape: widget._shape,
@@ -170,7 +170,7 @@ class _LoadingBumpingLineState extends State<LoadingBumpingLine>
                 border: Border.all(
                   color: widget.borderColor,
                   width: widget.borderSize != null
-                      ? widget.borderSize / 4
+                      ? widget.borderSize! / 4
                       : widget.size / 32,
                   style: BorderStyle.solid,
                 ),
@@ -181,7 +181,7 @@ class _LoadingBumpingLineState extends State<LoadingBumpingLine>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 }

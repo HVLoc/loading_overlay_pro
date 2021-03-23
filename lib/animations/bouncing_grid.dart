@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LoadingBouncingGrid extends ProgressIndicator {
   /// Sets an [AnimationController] is case you need to do something
   /// specific with it like play/pause animation.
-  final AnimationController controller;
+  final AnimationController? controller;
 
   final BoxShape _shape;
 
@@ -26,7 +26,7 @@ class LoadingBouncingGrid extends ProgressIndicator {
   /// Size of the border of each shape in the grid.
   ///
   /// Default size is set to [size/24].
-  final double borderSize;
+  final double? borderSize;
 
   /// Sets the animation to be inverted
   ///
@@ -40,11 +40,11 @@ class LoadingBouncingGrid extends ProgressIndicator {
 
   /// Sets an [IndexedWidgetBuilder] function to return
   /// your own customized widget.
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// Creates the LoadingBouncingGrid animation with a circle shape
   const LoadingBouncingGrid.circle({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blueGrey,
     this.borderColor = Colors.transparent,
@@ -68,7 +68,7 @@ class LoadingBouncingGrid extends ProgressIndicator {
 
   /// Creates the LoadingBouncingGrid animation with a square shape
   const LoadingBouncingGrid.square({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blueGrey,
     this.borderColor = Colors.transparent,
@@ -96,8 +96,8 @@ class LoadingBouncingGrid extends ProgressIndicator {
 
 class _LoadingBouncingGridState extends State<LoadingBouncingGrid>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation1,
+  AnimationController? _controller;
+  Animation<double>? _animation1,
       _animation2,
       _animation3,
       _animation4,
@@ -111,51 +111,51 @@ class _LoadingBouncingGridState extends State<LoadingBouncingGrid>
 
     _animation1 = Tween(begin: -1.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
       ),
     );
 
     _animation2 = Tween(begin: -1.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.1, 0.7, curve: Curves.easeIn),
       ),
     );
 
     _animation3 = Tween(begin: -1.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.2, 0.8, curve: Curves.easeIn),
       ),
     );
 
     _animation4 = Tween(begin: -1.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.3, 0.9, curve: Curves.easeIn),
       ),
     );
 
     _animation5 = Tween(begin: -1.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: const Interval(0.4, 1.0, curve: Curves.easeIn),
       ),
     );
 
-    _controller
+    _controller!
       ..addListener(() => setState(() {}))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          _controller.reverse();
+          _controller!.reverse();
         }
         if (status == AnimationStatus.dismissed) {
-          _controller.forward();
+          _controller!.forward();
         }
       });
 
-    _controller.forward();
+    _controller!.forward();
   }
 
   @override
@@ -168,25 +168,25 @@ class _LoadingBouncingGridState extends State<LoadingBouncingGrid>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildShape(_animation3, 0),
-              _buildShape(_animation4, 1),
-              _buildShape(_animation5, 2),
+              _buildShape(_animation3!, 0),
+              _buildShape(_animation4!, 1),
+              _buildShape(_animation5!, 2),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildShape(_animation2, 3),
-              _buildShape(_animation3, 4),
-              _buildShape(_animation4, 5),
+              _buildShape(_animation2!, 3),
+              _buildShape(_animation3!, 4),
+              _buildShape(_animation4!, 5),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildShape(_animation1, 6),
-              _buildShape(_animation2, 7),
-              _buildShape(_animation3, 8),
+              _buildShape(_animation1!, 6),
+              _buildShape(_animation2!, 7),
+              _buildShape(_animation3!, 8),
             ],
           ),
         ],
@@ -206,7 +206,7 @@ class _LoadingBouncingGridState extends State<LoadingBouncingGrid>
     return SizedBox.fromSize(
       size: Size.square(widget.size / 3),
       child: widget.itemBuilder != null
-          ? widget.itemBuilder(context, index)
+          ? widget.itemBuilder!(context, index)
           : DecoratedBox(
               decoration: BoxDecoration(
                 shape: widget._shape,
@@ -214,7 +214,7 @@ class _LoadingBouncingGridState extends State<LoadingBouncingGrid>
                 border: Border.all(
                   color: widget.borderColor,
                   width: widget.borderSize != null
-                      ? widget.borderSize / 3
+                      ? widget.borderSize! / 3
                       : widget.size / 24,
                   style: BorderStyle.solid,
                 ),
@@ -225,7 +225,7 @@ class _LoadingBouncingGridState extends State<LoadingBouncingGrid>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 }

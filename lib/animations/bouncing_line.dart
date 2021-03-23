@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class LoadingBouncingLine extends ProgressIndicator {
   /// Sets an [AnimationController] is case you need to do something
   /// specific with it like play/pause animation.
-  final AnimationController controller;
+  final AnimationController? controller;
 
   final BoxShape _shape;
 
@@ -28,7 +28,7 @@ class LoadingBouncingLine extends ProgressIndicator {
   /// Size of the border of each shape in the line.
   ///
   /// Default size is set to [size/32].
-  final double borderSize;
+  final double? borderSize;
 
   /// Total duration for one cycle of animation.
   ///
@@ -37,11 +37,11 @@ class LoadingBouncingLine extends ProgressIndicator {
 
   /// Sets an [IndexedWidgetBuilder] function to return
   /// your own customized widget.
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// Creates the LoadingBouncingLine animation with a circle shape
   const LoadingBouncingLine.circle({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blue,
     this.borderColor = Colors.blue,
@@ -64,7 +64,7 @@ class LoadingBouncingLine extends ProgressIndicator {
 
   /// Creates the LoadingBouncingLine animation with a square shape
   const LoadingBouncingLine.square({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blue,
     this.borderColor = Colors.blue,
@@ -91,8 +91,8 @@ class LoadingBouncingLine extends ProgressIndicator {
 
 class _LoadingBouncingLineState extends State<LoadingBouncingLine>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -135,7 +135,7 @@ class _LoadingBouncingLineState extends State<LoadingBouncingLine>
     return SizedBox.fromSize(
       size: Size.square(widget.size / 4),
       child: widget.itemBuilder != null
-          ? widget.itemBuilder(context, index)
+          ? widget.itemBuilder!(context, index)
           : DecoratedBox(
               decoration: BoxDecoration(
                 shape: widget._shape,
@@ -143,7 +143,7 @@ class _LoadingBouncingLineState extends State<LoadingBouncingLine>
                 border: Border.all(
                   color: widget.borderColor,
                   width: widget.borderSize != null
-                      ? widget.borderSize / 4
+                      ? widget.borderSize! / 4
                       : widget.size / 32,
                   style: BorderStyle.solid,
                 ),

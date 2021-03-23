@@ -3,9 +3,9 @@ import 'package:loading_overlay_pro/animations/bouncing_line.dart';
 
 class LoadingOverlayPro extends StatefulWidget {
   const LoadingOverlayPro({
-    Key key,
-    @required this.isLoading,
-    @required this.child,
+    Key? key,
+    required this.isLoading,
+    required this.child,
     this.backgroundColor = Colors.black54,
     this.progressIndicator = const LoadingBouncingLine.circle(),
     this.overLoading,
@@ -22,9 +22,9 @@ class LoadingOverlayPro extends StatefulWidget {
 
   final Widget child;
 
-  final Widget overLoading;
+  final Widget? overLoading;
 
-  final Widget bottomLoading;
+  final Widget? bottomLoading;
 
   @override
   _LoadingOverlayProState createState() => _LoadingOverlayProState();
@@ -43,11 +43,11 @@ class _LoadingOverlayProState extends State<LoadingOverlayPro> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (widget.overLoading != null) widget.overLoading,
+                    if (widget.overLoading != null) widget.overLoading!,
                     SizedBox(height: 20),
                     Center(child: widget.progressIndicator),
                     SizedBox(height: 20),
-                    if (widget.bottomLoading != null) widget.bottomLoading,
+                    if (widget.bottomLoading != null) widget.bottomLoading!,
                   ],
                 ))),
       ],

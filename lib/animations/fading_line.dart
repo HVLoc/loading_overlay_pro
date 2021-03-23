@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LoadingFadingLine extends ProgressIndicator {
   /// Sets an [AnimationController] is case you need to do something
   /// specific with it like play/pause animation.
-  final AnimationController controller;
+  final AnimationController? controller;
 
   final BoxShape _shape;
 
@@ -26,7 +26,7 @@ class LoadingFadingLine extends ProgressIndicator {
   /// Size of the border of each shape in the line.
   ///
   /// Default size is set to [size/32].
-  final double borderSize;
+  final double? borderSize;
 
   /// Total duration for one cycle of animation.
   ///
@@ -35,11 +35,11 @@ class LoadingFadingLine extends ProgressIndicator {
 
   /// Sets an [IndexedWidgetBuilder] function to return
   /// your own customized widget.
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// Creates the LoadingFadingLine animation with a circle shape
   const LoadingFadingLine.circle({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blueGrey,
     this.borderColor = Colors.transparent,
@@ -62,7 +62,7 @@ class LoadingFadingLine extends ProgressIndicator {
 
   /// Creates the LoadingFadingLine animation with a square shape
   const LoadingFadingLine.square({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.blueGrey,
     this.borderColor = Colors.transparent,
@@ -89,7 +89,7 @@ class LoadingFadingLine extends ProgressIndicator {
 
 class _LoadingFadingLineState extends State<LoadingFadingLine>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -143,7 +143,7 @@ class _LoadingFadingLineState extends State<LoadingFadingLine>
     return SizedBox.fromSize(
       size: Size.square(widget.size / 4),
       child: widget.itemBuilder != null
-          ? widget.itemBuilder(context, index)
+          ? widget.itemBuilder!(context, index)
           : DecoratedBox(
               decoration: BoxDecoration(
                 shape: widget._shape,
@@ -151,7 +151,7 @@ class _LoadingFadingLineState extends State<LoadingFadingLine>
                 border: Border.all(
                   color: widget.borderColor,
                   width: widget.borderSize != null
-                      ? widget.borderSize / 4
+                      ? widget.borderSize! / 4
                       : widget.size / 32,
                   style: BorderStyle.solid,
                 ),

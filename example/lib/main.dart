@@ -50,13 +50,13 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          RaisedButton(
+          ElevatedButton(
               child: Text("Loading overlay"),
               onPressed: () => _openPage(LoadingOverlayPage())),
           SizedBox(
             height: 50,
           ),
-          RaisedButton(
+          ElevatedButton(
               child: Text("Loading Percent"),
               onPressed: () => _openPage(PercentPage())),
         ],
@@ -71,7 +71,7 @@ class LoadingOverlayPage extends StatefulWidget {
 }
 
 class _LoadingOverlayPageState extends State<LoadingOverlayPage> {
-  bool _isLoading = false;
+  bool _isLoading;
 
   bool _isIOS = false;
 
@@ -100,14 +100,14 @@ class _LoadingOverlayPageState extends State<LoadingOverlayPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     _isIOS = false;
                     _submit();
                   },
                   child: Text('Show Loading BouncingLine'),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     _isIOS = true;
                     _submit();
@@ -148,30 +148,30 @@ class _LoadingOverlayPageState extends State<LoadingOverlayPage> {
         ),
       );
 
-  Widget test() {
-    return LoadingOverlayPro(
-      child: Center(
-        child: RaisedButton(
-          onPressed: () {
-            _submit();
-          },
-          child: Text('Show Loading Custom IOS'),
-        ),
-      ),
-      backgroundColor: _isIOS ? Colors.white : Colors.black54,
-      isLoading: _isLoading,
-      progressIndicator: _isIOS
-          ? CupertinoActivityIndicator(radius: 100)
-          : LoadingBouncingLine.circle(
-              backgroundColor: Colors.blue,
-              size: 150.0,
-              duration: Duration(seconds: 2),
-              borderColor: Colors.blue,
-            ),
-      overLoading: Text("App Name"),
-      bottomLoading: Text("Loading..."),
-    );
-  }
+  // Widget test() {
+  //   return LoadingOverlayPro(
+  //     child: Center(
+  //       child: ElevatedButton(
+  //         onPressed: () {
+  //           _submit();
+  //         },
+  //         child: Text('Show Loading Custom IOS'),
+  //       ),
+  //     ),
+  //     backgroundColor: _isIOS ? Colors.white : Colors.black54,
+  //     isLoading: _isLoading,
+  //     progressIndicator: _isIOS
+  //         ? CupertinoActivityIndicator(radius: 100)
+  //         : LoadingBouncingLine.circle(
+  //             backgroundColor: Colors.blue,
+  //             size: 150.0,
+  //             duration: Duration(seconds: 2),
+  //             borderColor: Colors.blue,
+  //           ),
+  //     overLoading: Text("App Name"),
+  //     bottomLoading: Text("Loading..."),
+  //   );
+  // }
 }
 
 class PercentPage extends StatefulWidget {

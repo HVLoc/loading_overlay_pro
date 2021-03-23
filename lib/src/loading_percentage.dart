@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class LoadingPercentage extends StatefulWidget {
   const LoadingPercentage({
-    Key key,
-    @required this.isLoading,
-    @required this.child,
+    Key? key,
+    required this.isLoading,
+    required this.child,
     this.backgroundColor = Colors.black54,
     this.overLoading,
     this.timer = const Duration(seconds: 100),
@@ -30,9 +30,9 @@ class LoadingPercentage extends StatefulWidget {
 
   final Widget child;
 
-  final Widget overLoading;
+  final Widget? overLoading;
 
-  final Widget bottomLoading;
+  final Widget? bottomLoading;
 
   final bool isLineLoading;
 
@@ -94,7 +94,7 @@ class LoadingPercentage extends StatefulWidget {
 
 class _LoadingPercentageState extends State<LoadingPercentage>
     with TickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -120,14 +120,14 @@ class _LoadingPercentageState extends State<LoadingPercentage>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: widget.isLineLoading
-                      ? buildLinePainter()
-                      : buildCirclePainter(),
+                      ? buildLinePainter() as List<Widget>
+                      : buildCirclePainter() as List<Widget>,
                 )))
       ],
     );
   }
 
-  List<Widget> buildLinePainter() {
+  List<Widget?> buildLinePainter() {
     return [
       if (widget.overLoading != null) widget.overLoading,
       SizedBox(height: 20),
@@ -141,7 +141,7 @@ class _LoadingPercentageState extends State<LoadingPercentage>
         height: 25,
         child: AnimatedBuilder(
           animation: _controller,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return CustomPaint(
               size: Size(MediaQuery.of(context).size.width, 50),
               painter: LinePainter(
@@ -159,7 +159,7 @@ class _LoadingPercentageState extends State<LoadingPercentage>
       if (widget.showProgress)
         AnimatedBuilder(
             animation: _controller,
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return _buildprogress();
             }),
       SizedBox(height: 20),
@@ -167,7 +167,7 @@ class _LoadingPercentageState extends State<LoadingPercentage>
     ];
   }
 
-  List<Widget> buildCirclePainter() {
+  List<Widget?> buildCirclePainter() {
     return [
       if (widget.overLoading != null) widget.overLoading,
       SizedBox(height: 20),
@@ -178,7 +178,7 @@ class _LoadingPercentageState extends State<LoadingPercentage>
             children: [
               AnimatedBuilder(
                 animation: _controller,
-                builder: (BuildContext context, Widget child) {
+                builder: (BuildContext context, Widget? child) {
                   return CustomPaint(
                     size: Size(MediaQuery.of(context).size.width, 50),
                     painter: CirclesPainter(
@@ -195,7 +195,7 @@ class _LoadingPercentageState extends State<LoadingPercentage>
                 Center(
                   child: AnimatedBuilder(
                       animation: _controller,
-                      builder: (BuildContext context, Widget child) {
+                      builder: (BuildContext context, Widget? child) {
                         return _buildprogress();
                       }),
                 ),
@@ -220,12 +220,12 @@ class _LoadingPercentageState extends State<LoadingPercentage>
 
 class LinePainter extends CustomPainter {
   LinePainter({
-    @required this.color,
-    @required this.progress,
-    @required this.paintingStyle,
-    @required this.strokeJoin,
-    @required this.strokeCap,
-    @required this.strokeWidth,
+    required this.color,
+    required this.progress,
+    required this.paintingStyle,
+    required this.strokeJoin,
+    required this.strokeCap,
+    required this.strokeWidth,
   });
 
   final double progress;
@@ -262,12 +262,12 @@ class LinePainter extends CustomPainter {
 
 class CirclesPainter extends CustomPainter {
   CirclesPainter({
-    @required this.color,
-    @required this.progress,
-    @required this.paintingStyle,
-    @required this.strokeJoin,
-    @required this.strokeCap,
-    @required this.strokeWidth,
+    required this.color,
+    required this.progress,
+    required this.paintingStyle,
+    required this.strokeJoin,
+    required this.strokeCap,
+    required this.strokeWidth,
   });
   final double progress;
   final Color color;

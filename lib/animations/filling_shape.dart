@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class LoadingFilling extends ProgressIndicator {
   /// Sets an [AnimationController] is case you need to do something
   /// specific with it like play/pause animation.
-  final AnimationController controller;
+  final AnimationController? controller;
 
   final BoxShape _shape;
 
@@ -34,7 +34,7 @@ class LoadingFilling extends ProgressIndicator {
   /// Size of the border of the shape.
   ///
   /// Default size is set to [size/8].
-  final double borderSize;
+  final double? borderSize;
 
   /// Total duration for one cycle of animation.
   ///
@@ -43,11 +43,11 @@ class LoadingFilling extends ProgressIndicator {
 
   /// Sets an [IndexedWidgetBuilder] function to return
   /// your own customized widget.
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// Creates the LoadingFilling animation with a square shape
   const LoadingFilling.square({
-    Key key,
+    Key? key,
     this.controller,
     this.backgroundColor = Colors.transparent,
     this.borderColor = Colors.blueGrey,
@@ -77,9 +77,9 @@ class LoadingFilling extends ProgressIndicator {
 
 class _LoadingFillingState extends State<LoadingFilling>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation1;
-  Animation<double> _animation2;
+  late AnimationController _controller;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
 
   @override
   void initState() {
@@ -122,7 +122,7 @@ class _LoadingFillingState extends State<LoadingFilling>
 
   Widget _itemBuilder(int index) {
     return widget.itemBuilder != null
-        ? widget.itemBuilder(context, index)
+        ? widget.itemBuilder!(context, index)
         : Stack(
             fit: StackFit.expand,
             alignment: AlignmentDirectional.bottomCenter,

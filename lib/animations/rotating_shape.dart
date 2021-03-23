@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class LoadingRotating extends ProgressIndicator {
   /// Sets an [AnimationController] is case you need to do something
   /// specific with it like play/pause animation.
-  final AnimationController controller;
+  final AnimationController? controller;
 
   final BoxShape _shape;
 
@@ -28,7 +28,7 @@ class LoadingRotating extends ProgressIndicator {
   /// Size of the border of the shape.
   ///
   /// Default size is set to [size/8].
-  final double borderSize;
+  final double? borderSize;
 
   /// Total duration for one cycle of animation.
   ///
@@ -37,11 +37,11 @@ class LoadingRotating extends ProgressIndicator {
 
   /// Sets an [IndexedWidgetBuilder] function to return
   /// your own customized widget.
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// Creates the LoadingRotating animation with a square shape
   const LoadingRotating.square({
-    Key key,
+    Key? key,
     this.controller,
     this.borderColor = Colors.blueGrey,
     this.backgroundColor = Colors.transparent,
@@ -68,8 +68,8 @@ class LoadingRotating extends ProgressIndicator {
 
 class _LoadingRotatingState extends State<LoadingRotating>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -104,7 +104,7 @@ class _LoadingRotatingState extends State<LoadingRotating>
 
   Widget _itemBuilder(int index) {
     return widget.itemBuilder != null
-        ? widget.itemBuilder(context, index)
+        ? widget.itemBuilder!(context, index)
         : DecoratedBox(
             decoration: BoxDecoration(
               shape: widget._shape,
