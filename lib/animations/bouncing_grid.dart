@@ -53,17 +53,7 @@ class LoadingBouncingGrid extends ProgressIndicator {
     this.inverted = false,
     this.itemBuilder,
     this.duration = const Duration(milliseconds: 1500),
-  })  : assert(backgroundColor != null,
-            'loading_animations: property [backgroundColor] must not be null. Prefer using Colors.transparent instead.'),
-        assert(borderColor != null,
-            'loading_animations: property [borderColor] must not be null. Prefer using Colors.transparent instead.'),
-        assert(size != null,
-            'loading_animations: property [size] must not be null'),
-        assert(borderSize != null ? borderSize <= size / 2 : true,
-            'loading_animations: property [borderSize] must not be greater than half the widget size'),
-        assert(duration != null,
-            'loading_animations: property [duration] must not be null'),
-        _shape = BoxShape.circle,
+  })  : _shape = BoxShape.circle,
         super(key: key);
 
   /// Creates the LoadingBouncingGrid animation with a square shape
@@ -77,17 +67,7 @@ class LoadingBouncingGrid extends ProgressIndicator {
     this.inverted = false,
     this.itemBuilder,
     this.duration = const Duration(milliseconds: 1500),
-  })  : assert(backgroundColor != null,
-            'loading_animations: property [backgroundColor] must not be null. Prefer using Colors.transparent instead.'),
-        assert(borderColor != null,
-            'loading_animations: property [borderColor] must not be null. Prefer using Colors.transparent instead.'),
-        assert(size != null,
-            'loading_animations: property [size] must not be null'),
-        assert(borderSize != null ? borderSize <= size / 2 : true,
-            'loading_animations: property [borderSize] must not be greater than half the widget size'),
-        assert(duration != null,
-            'loading_animations: property [duration] must not be null'),
-        _shape = BoxShape.rectangle,
+  })  : _shape = BoxShape.rectangle,
         super(key: key);
 
   @override

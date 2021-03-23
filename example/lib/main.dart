@@ -208,7 +208,7 @@ class _PercentPageState extends State<PercentPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     _submit();
                   },
